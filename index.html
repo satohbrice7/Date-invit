@@ -1,524 +1,557 @@
-```html
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Une invitation spéciale... ✨</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Une surprise pour Noeva ✨</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        nude: {
-                            50: '#fcf8f5',
-                            100: '#f7ede2',
-                            200: '#f5ebe0',
-                            300: '#e3d5ca',
-                            400: '#d5bdaf',
-                            500: '#d4a373',
-                            600: '#bc8a5f',
-                            700: '#a5a58d',
-                            800: '#6b4d38',
-                            900: '#432818',
-                        }
-                    },
-                    fontFamily: {
-                        serif: ['"Playfair Display"', 'serif'],
-                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
+    body {
+      background: linear-gradient(135deg, #ff0844 0%, #ffb199 50%, #e100ff 100%);
+      background-size: 200% 200%;
+      animation: gradientBG 8s ease infinite;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+      padding: 15px;
+      position: relative;
+    }
 
-    <style>
-        body {
-            background: linear-gradient(135deg, #fcf8f5 0%, #f5ebe0 50%, #e3d5ca 100%);
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
 
-        /* Glassmorphism subtle card styling */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 20px 40px rgba(67, 40, 24, 0.05);
-        }
+    /* Coeurs flottants avec "Noeva" */
+    .floating-hearts-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
 
-        /* Smooth transition between steps */
-        .step-content {
-            display: none;
-            opacity: 0;
-            transform: translateY(12px);
-            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
-        }
+    .floating-heart {
+      position: absolute;
+      bottom: -100px;
+      color: rgba(255, 255, 255, 0.85);
+      font-family: 'Dancing Script', cursive;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-shadow: 0 0 10px rgba(255, 20, 147, 0.8);
+      animation: floatUp linear infinite;
+    }
 
-        .step-content.active {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
+    .floating-heart::before {
+      content: '💖';
+      font-size: 2.5rem;
+      position: absolute;
+      z-index: -1;
+      filter: drop-shadow(0 0 8px rgba(255, 0, 128, 0.6));
+    }
 
-        /* Custom date picker refinement */
-        input[type="date"]::-webkit-calendar-picker-indicator {
-            cursor: pointer;
-            filter: invert(0.3) sepia(0.2) drop-shadow(0 0 1px rgba(0,0,0,0.1));
-            opacity: 0.7;
-        }
-        input[type="date"]::-webkit-calendar-picker-indicator:hover {
-            opacity: 1;
-        }
+    .floating-heart span {
+      font-size: 0.9rem;
+      color: #ffffff;
+      font-weight: 700;
+      background: rgba(255, 20, 147, 0.6);
+      padding: 2px 8px;
+      border-radius: 12px;
+      backdrop-filter: blur(4px);
+    }
 
-        /* Custom subtle pulsing effect for buttons */
-        .btn-glow {
-            box-shadow: 0 8px 25px -4px rgba(212, 163, 115, 0.4);
-        }
-        .btn-glow:hover {
-            box-shadow: 0 12px 30px -2px rgba(212, 163, 115, 0.5);
-        }
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) rotate(0deg) scale(0.8);
+        opacity: 0;
+      }
+      15% {
+        opacity: 1;
+      }
+      85% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-110vh) rotate(360deg) scale(1.2);
+        opacity: 0;
+      }
+    }
 
-        /* Custom option card selection */
-        .option-card {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .option-card.selected {
-            border-color: #d4a373;
-            background-color: rgba(245, 235, 224, 0.5);
-            box-shadow: 0 8px 20px rgba(212, 163, 115, 0.15);
-        }
+    /* Lecteur Musique Tayc */
+    .music-player {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: 30px;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      color: white;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
 
-        /* Confetti Canvas overlay */
-        #canvas-confetti {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            z-index: 50;
-        }
-    </style>
+    .music-player:active {
+      transform: scale(0.95);
+    }
+
+    .music-disc {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #333 30%, #000 70%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: spin 3s linear infinite;
+      animation-play-state: paused;
+      border: 2px solid #ff4b2b;
+    }
+
+    .music-disc.playing {
+      animation-play-state: running;
+    }
+
+    .music-disc::after {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: white;
+      border-radius: 50%;
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    .music-info {
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    /* Carte principale */
+    .card {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(15px);
+      border-radius: 28px;
+      padding: 2.2rem 1.8rem;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3), 0 0 30px rgba(255, 0, 128, 0.3);
+      text-align: center;
+      max-width: 420px;
+      width: 100%;
+      position: relative;
+      z-index: 10;
+      border: 2px solid rgba(255, 255, 255, 0.8);
+      min-height: 420px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .step {
+      display: none;
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    .step.active {
+      display: block;
+    }
+
+    .emoji {
+      font-size: 3.5rem;
+      margin-bottom: 0.8rem;
+      display: inline-block;
+      animation: pulse 1.5s infinite alternate;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.15); }
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      color: #1a1a1a;
+      margin-bottom: 0.8rem;
+      font-weight: 800;
+      line-height: 1.3;
+    }
+
+    h1 span.highlight {
+      color: #ff0055;
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.2rem;
+      display: inline-block;
+    }
+
+    p {
+      color: #4a4a4a;
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.4;
+    }
+
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      position: relative;
+      min-height: 60px;
+      margin-top: 10px;
+    }
+
+    .btn {
+      padding: 14px 28px;
+      font-size: 1rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+      outline: none;
+    }
+
+    .btn-yes {
+      background: linear-gradient(45deg, #ff0055, #ff5050);
+      color: white;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
+
+    .btn-yes:hover, .btn-yes:active {
+      transform: scale(1.05);
+      box-shadow: 0 8px 25px rgba(255, 0, 85, 0.5);
+    }
+
+    .btn-no {
+      background: #e0e0e0;
+      color: #555;
+      position: absolute;
+      transition: left 0.2s ease, top 0.2s ease;
+      z-index: 50;
+    }
+
+    .input-field, .select-field {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #ff3366;
+      border-radius: 15px;
+      font-size: 1rem;
+      margin-bottom: 1.2rem;
+      outline: none;
+      background: #fff;
+      color: #333;
+    }
+
+    .option-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 1.5rem;
+    }
+
+    .option-card {
+      border: 2px solid #f0f0f0;
+      border-radius: 16px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: #fff;
+      text-align: left;
+    }
+
+    .option-card.selected {
+      border-color: #ff0055;
+      background: rgba(255, 0, 85, 0.05);
+      box-shadow: 0 4px 12px rgba(255, 0, 85, 0.15);
+    }
+
+    .option-card .icon {
+      font-size: 1.8rem;
+    }
+
+    .option-card .text-title {
+      font-weight: 700;
+      color: #222;
+      font-size: 0.95rem;
+    }
+
+    .option-card .text-sub {
+      font-size: 0.8rem;
+      color: #777;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
+<body>
 
-<body class="flex items-center justify-center p-4 relative min-h-screen">
+  <!-- Musique de fond Tayc -->
+  <div class="music-player" id="music-toggle" onclick="toggleMusic()">
+    <div class="music-disc" id="music-disc"></div>
+    <div class="music-info">
+      <div>🎵 Tayc - Carry Me</div>
+      <div style="font-size: 0.65rem; opacity: 0.8;" id="music-status">Toucher pour lancer</div>
+    </div>
+  </div>
 
-    <canvas id="canvas-confetti"></canvas>
+  <audio id="bg-music" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-love-112199.mp3" type="audio/mp3">
+  </audio>
 
-    <!-- Floating Background Decor Elements -->
-    <div class="fixed -top-20 -left-20 w-72 h-72 bg-nude-300 rounded-full blur-3xl opacity-40 pointer-events-none"></div>
-    <div class="fixed -bottom-20 -right-20 w-80 h-80 bg-nude-200 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
+  <!-- Coeurs flottants -->
+  <div class="floating-hearts-container" id="hearts-container"></div>
 
-    <main class="w-full max-w-lg glass-card rounded-[32px] p-6 sm:p-10 relative z-10 my-auto transition-all duration-300">
-        
-        <!-- Progress Dots Header -->
-        <div class="flex justify-center items-center gap-2 mb-8" id="progress-dots">
-            <span class="dot w-2.5 h-2.5 rounded-full bg-nude-500 transition-all duration-300"></span>
-            <span class="dot w-2 h-2 rounded-full bg-nude-300 transition-all duration-300"></span>
-            <span class="dot w-2 h-2 rounded-full bg-nude-300 transition-all duration-300"></span>
-            <span class="dot w-2 h-2 rounded-full bg-nude-300 transition-all duration-300"></span>
-            <span class="dot w-2 h-2 rounded-full bg-nude-300 transition-all duration-300"></span>
+  <!-- Carte Principale -->
+  <div class="card" id="main-card">
+    
+    <!-- Étape 1 -->
+    <div class="step active" id="step-1">
+      <div class="emoji">👑</div>
+      <h1>Coucou <span class="highlight">Noeva</span>...</h1>
+      <p>J'ai préparé une petite surprise spéciale juste pour toi. Tu es prête ?</p>
+      <div class="btn-group">
+        <button class="btn btn-yes" onclick="startExperience()">Oui, je veux voir ! ✨</button>
+      </div>
+    </div>
+
+    <!-- Étape 2 : Le bouton Non fuyant -->
+    <div class="step" id="step-2">
+      <div class="emoji">🌹</div>
+      <h1>Noeva, est-ce que tu me ferais l'honneur d'un date avec moi ?</h1>
+      <p>Rien que toi et moi pour passer un moment inoubliable !</p>
+      <div class="btn-group" id="runaway-zone" style="height: 80px;">
+        <button class="btn btn-yes" onclick="nextStep(3)">Oui, avec grand plaisir ! 😍</button>
+        <button class="btn btn-no" id="btn-no">Non 😜</button>
+      </div>
+    </div>
+
+    <!-- Étape 3 : Choix du jour -->
+    <div class="step" id="step-3">
+      <div class="emoji">📅</div>
+      <h1>C'est parfait !</h1>
+      <p>Dis-moi quel jour arrangerait la reine Noeva :</p>
+      <input type="date" id="date-picker" class="input-field">
+      <button class="btn btn-yes" onclick="validateDate()">Continuer ➡️</button>
+    </div>
+
+    <!-- Étape 4 : Choix de l'activité -->
+    <div class="step" id="step-4">
+      <div class="emoji">✨</div>
+      <h1>Qu'est-ce qui te ferait le plus plaisir ?</h1>
+      <p>Choisis l'ambiance pour notre rendez-vous :</p>
+      
+      <div class="option-cards">
+        <div class="option-card" id="opt-cine" onclick="selectOption('cine')">
+          <div class="icon">🎬</div>
+          <div>
+            <div class="text-title">Séance Cinéma</div>
+            <div class="text-sub">Au Majestic Cinéma de Yaoundé</div>
+          </div>
         </div>
 
-        <!-- ================= STEP 1 ================= -->
-        <section id="step-1" class="step-content active text-center">
-            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-nude-100 text-2xl mb-6 shadow-sm border border-nude-200">
-                ✨
-            </div>
-            <h1 class="font-serif text-3xl sm:text-4xl text-nude-900 font-medium mb-3 tracking-tight">
-                Coucou toi
-            </h1>
-            <p class="text-nude-800/80 text-base leading-relaxed mb-8 max-w-xs mx-auto">
-                J'ai une petite question importante à te poser...
-            </p>
-            <button onclick="goToStep(2)" class="btn-glow w-full py-4 px-8 bg-nude-500 hover:bg-nude-600 text-white font-medium rounded-2xl transition-all duration-300 transform active:scale-[0.98] text-base flex items-center justify-center gap-2">
-                <span>Dis-moi tout</span>
-                <span class="text-lg">🤍</span>
-            </button>
-        </section>
+        <div class="option-card" id="opt-resto" onclick="selectOption('resto')">
+          <div class="icon">🍽️</div>
+          <div>
+            <div class="text-title">Un bon Restaurant</div>
+            <div class="text-sub">Tu choisis le lieu qui te donne envie</div>
+          </div>
+        </div>
+      </div>
 
-        <!-- ================= STEP 2 ================= -->
-        <section id="step-2" class="step-content text-center relative">
-            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-nude-100 text-2xl mb-6 shadow-sm border border-nude-200">
-                🥂
-            </div>
-            <h1 class="font-serif text-3xl sm:text-4xl text-nude-900 font-medium mb-3 tracking-tight">
-                Un petit date ensemble, ça te dirait ?
-            </h1>
-            <p class="text-nude-800/80 text-base leading-relaxed mb-10 max-w-xs mx-auto">
-                Juste toi et moi, une belle ambiance et un super moment.
-            </p>
+      <div id="resto-input-container" style="display: none;">
+        <input type="text" id="resto-name" class="input-field" placeholder="Propose le nom du resto de ton choix...">
+      </div>
 
-            <div class="relative w-full min-h-[120px] flex flex-col sm:flex-row items-center justify-center gap-4" id="runaway-area">
-                <button onclick="goToStep(3)" class="btn-glow w-full sm:w-auto py-4 px-8 bg-nude-500 hover:bg-nude-600 text-white font-medium rounded-2xl transition-all duration-300 transform active:scale-[0.98] text-base z-10">
-                    Oui, carrément ! 🥂
-                </button>
-                
-                <button id="btn-no" class="w-full sm:w-auto py-4 px-8 bg-nude-200 hover:bg-nude-300 text-nude-800 font-medium rounded-2xl transition-all duration-200 text-base border border-nude-300/50 absolute sm:relative touch-none">
-                    Non 😜
-                </button>
-            </div>
-        </section>
+      <button class="btn btn-yes" onclick="validateActivity()">Valider le choix ➡️</button>
+    </div>
 
-        <!-- ================= STEP 3 ================= -->
-        <section id="step-3" class="step-content text-center">
-            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-nude-100 text-2xl mb-6 shadow-sm border border-nude-200">
-                🗓️
-            </div>
-            <h1 class="font-serif text-3xl sm:text-4xl text-nude-900 font-medium mb-3 tracking-tight">
-                Trop bien !
-            </h1>
-            <p class="text-nude-800/80 text-base leading-relaxed mb-8 max-w-xs mx-auto">
-                Quel jour tu es disponible ? Choisis la date qui t'arrange le plus :
-            </p>
+    <!-- Étape 5 : Style vestimentaire -->
+    <div class="step" id="step-5">
+      <div class="emoji">👗</div>
+      <h1>Dernier détail...</h1>
+      <p>Quelle ambiance vestimentaire on adopte ?</p>
+      
+      <select id="dress-code" class="input-field">
+        <option value="Chic & Élégante ✨">Chic & Élégante ✨</option>
+        <option value="Décontractée & Chill 👟">Décontractée & Chill 👟</option>
+        <option value="Surprends-moi ! 🎭">Surprends-moi ! 🎭</option>
+      </select>
 
-            <div class="mb-8">
-                <input type="date" id="date-select" onchange="validateDateInput()" class="w-full py-4 px-6 bg-nude-50/80 border border-nude-300 rounded-2xl text-nude-900 font-medium focus:outline-none focus:ring-2 focus:ring-nude-500 focus:border-transparent transition-all shadow-inner text-center text-lg">
-                <p id="date-error" class="text-red-500 text-sm mt-2 hidden">Merci de choisir une date pour continuer.</p>
-            </div>
+      <button class="btn btn-yes" onclick="finishAll()">Finaliser notre Rendez-vous 🎉</button>
+    </div>
 
-            <button id="btn-step-3" onclick="handleDateSubmit()" class="w-full py-4 px-8 bg-nude-500 hover:bg-nude-600 text-white font-medium rounded-2xl transition-all duration-300 transform active:scale-[0.98] text-base opacity-50 cursor-not-allowed flex items-center justify-center gap-2">
-                <span>Étape suivante</span>
-                <span>➔</span>
-            </button>
-        </section>
+    <!-- Étape 6 : Confirmation WhatsApp -->
+    <div class="step" id="step-6">
+      <div class="emoji">🥳</div>
+      <h1>C'est officiel Noeva !</h1>
+      <p id="recap-text">Notre date est réservé. Clique ci-dessous pour m'envoyer les détails sur WhatsApp !</p>
+      <button class="btn btn-yes" onclick="sendWhatsApp()">M'envoyer la confirmation 📲</button>
+    </div>
 
-        <!-- ================= STEP 4 ================= -->
-        <section id="step-4" class="step-content text-center">
-            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-nude-100 text-2xl mb-6 shadow-sm border border-nude-200">
-                ✨
-            </div>
-            <h1 class="font-serif text-3xl sm:text-4xl text-nude-900 font-medium mb-3 tracking-tight">
-                Qu'est-ce qui te ferait plaisir ?
-            </h1>
-            <p class="text-nude-800/80 text-base leading-relaxed mb-6 max-w-xs mx-auto">
-                Sélectionne l'ambiance pour notre rendez-vous :
-            </p>
+  </div>
 
-            <!-- Activity Choice Cards -->
-            <div class="space-y-4 mb-6">
-                <!-- Option Cinema -->
-                <div onclick="selectOption('cinema')" id="option-cinema" class="option-card p-5 border-2 border-nude-200 rounded-2xl cursor-pointer text-left flex items-start gap-4 hover:border-nude-400 bg-white/60">
-                    <div class="text-3xl p-2 rounded-xl bg-nude-100 border border-nude-200">🎬</div>
-                    <div class="flex-1">
-                        <h3 class="font-semibold text-nude-900 text-lg">Un bon film au cinéma</h3>
-                        <p class="text-sm text-nude-700/80 mt-1" id="cinema-detail">
-                            Ce sera au <span class="font-semibold text-nude-900">Majestic Cinéma de Yaoundé</span> ! ✨
-                        </p>
-                    </div>
-                </div>
+  <script>
+    // Génération des cœurs flottants "Noeva"
+    const heartsContainer = document.getElementById('hearts-container');
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('floating-heart');
+      heart.style.left = Math.random() * 90 + 5 + 'vw';
+      heart.style.animationDuration = Math.random() * 3 + 4 + 's';
+      
+      const span = document.createElement('span');
+      span.innerText = 'Noeva';
+      heart.appendChild(span);
 
-                <!-- Option Restaurant -->
-                <div onclick="selectOption('resto')" id="option-resto" class="option-card p-5 border-2 border-nude-200 rounded-2xl cursor-pointer text-left flex items-start gap-4 hover:border-nude-400 bg-white/60">
-                    <div class="text-3xl p-2 rounded-xl bg-nude-100 border border-nude-200">🍽️</div>
-                    <div class="flex-1">
-                        <h3 class="font-semibold text-nude-900 text-lg">Un délicieux restaurant</h3>
-                        <p class="text-sm text-nude-700/80 mt-1">Un moment gourmand dans ton endroit préféré.</p>
-                        
-                        <!-- Resto Name Input (Hidden by default) -->
-                        <div id="resto-input-container" class="mt-4 hidden" onclick="event.stopPropagation()">
-                            <label class="block text-xs font-semibold uppercase tracking-wider text-nude-700 mb-2">Où aimerais-tu qu'on aille ?</label>
-                            <input type="text" id="resto-name" placeholder="Propose ton resto préféré..." onkeyup="validateActivityChoice()" class="w-full py-3 px-4 bg-white border border-nude-300 rounded-xl text-nude-900 text-sm focus:outline-none focus:ring-2 focus:ring-nude-500">
-                        </div>
-                    </div>
-                </div>
-            </div>
+      heartsContainer.appendChild(heart);
 
-            <p id="activity-error" class="text-red-500 text-sm mb-4 hidden">Veuillez choisir une activité pour continuer.</p>
+      setTimeout(() => {
+        heart.remove();
+      }, 7000);
+    }
+    setInterval(createHeart, 500);
 
-            <button id="btn-step-4" onclick="handleActivitySubmit()" class="w-full py-4 px-8 bg-nude-500 hover:bg-nude-600 text-white font-medium rounded-2xl transition-all duration-300 transform active:scale-[0.98] text-base opacity-50 cursor-not-allowed">
-                Valider notre date ✨
-            </button>
-        </section>
+    // Musique de fond
+    const bgMusic = document.getElementById('bg-music');
+    const musicDisc = document.getElementById('music-disc');
+    const musicStatus = document.getElementById('music-status');
+    let isPlaying = false;
 
-        <!-- ================= STEP 5 ================= -->
-        <section id="step-5" class="step-content text-center">
-            <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-nude-100 text-3xl mb-6 shadow-sm border border-nude-200">
-                🎉
-            </div>
-            <h1 class="font-serif text-3xl sm:text-4xl text-nude-900 font-medium mb-3 tracking-tight">
-                C'est officiel ! 🥂
-            </h1>
-            
-            <!-- Summary Card -->
-            <div class="my-6 p-6 bg-nude-100/60 border border-nude-300/60 rounded-2xl text-left space-y-3">
-                <div class="flex items-center gap-3">
-                    <span class="text-xl">📅</span>
-                    <div>
-                        <span class="text-xs font-semibold uppercase tracking-wider text-nude-700 block">Date</span>
-                        <span id="recap-date" class="font-medium text-nude-900 text-base">--</span>
-                    </div>
-                </div>
-                <hr class="border-nude-200">
-                <div class="flex items-center gap-3">
-                    <span class="text-xl" id="recap-icon">📍</span>
-                    <div>
-                        <span class="text-xs font-semibold uppercase tracking-wider text-nude-700 block">Programme</span>
-                        <span id="recap-activity" class="font-medium text-nude-900 text-base">--</span>
-                    </div>
-                </div>
-            </div>
+    function toggleMusic() {
+      if (isPlaying) {
+        bgMusic.pause();
+        musicDisc.classList.remove('playing');
+        musicStatus.innerText = 'Pause';
+        isPlaying = false;
+      } else {
+        bgMusic.play();
+        musicDisc.classList.add('playing');
+        musicStatus.innerText = 'En lecture 🎵';
+        isPlaying = true;
+      }
+    }
 
-            <p class="text-nude-800/90 text-sm leading-relaxed mb-8">
-                J'ai trop hâte ! Je te recontacte très vite pour caler les derniers détails. 😉
-            </p>
+    function startExperience() {
+      toggleMusic();
+      nextStep(2);
+    }
 
-            <!-- WhatsApp Share Button -->
-            <a id="whatsapp-link" href="#" target="_blank" class="btn-glow w-full py-4 px-6 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-2xl transition-all duration-300 transform active:scale-[0.98] text-base flex items-center justify-center gap-2 shadow-sm">
-                <span>Lui envoyer la confirmation sur WhatsApp</span>
-                <span class="text-lg">💬</span>
-            </a>
-        </section>
+    // Gestion des étapes
+    function nextStep(stepNum) {
+      document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+      document.getElementById(`step-${stepNum}`).classList.add('active');
+    }
 
-    </main>
+    // Bouton "Non" qui fuit
+    const btnNo = document.getElementById('btn-no');
+    
+    function moveNoButton() {
+      const card = document.getElementById('main-card');
+      const cardRect = card.getBoundingClientRect();
+      
+      const randomX = (Math.random() - 0.5) * (cardRect.width - 100);
+      const randomY = (Math.random() - 0.5) * (cardRect.height - 100);
 
-    <script>
-        // State variables
-        let currentStep = 1;
-        let selectedDate = null;
-        let selectedActivityType = null; // 'cinema' or 'resto'
-        let selectedRestoName = "";
+      btnNo.style.transform = `translate(${randomX}px, ${randomY}px)`;
+    }
 
-        // Set min date picker to today
-        document.addEventListener("DOMContentLoaded", () => {
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('date-select').setAttribute('min', today);
-        });
+    btnNo.addEventListener('mouseover', moveNoButton);
+    btnNo.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      moveNoButton();
+    });
 
-        function goToStep(stepNumber) {
-            // Hide current step
-            const currentEl = document.getElementById(`step-${currentStep}`);
-            if (currentEl) {
-                currentEl.classList.remove('active');
-            }
+    // Choix d'activité
+    let selectedActivity = '';
+    function selectOption(type) {
+      document.getElementById('opt-cine').classList.remove('selected');
+      document.getElementById('opt-resto').classList.remove('selected');
+      
+      const restoContainer = document.getElementById('resto-input-container');
 
-            // Update step indicator dots
-            const dots = document.querySelectorAll('#progress-dots .dot');
-            dots.forEach((dot, idx) => {
-                if (idx === stepNumber - 1) {
-                    dot.className = "dot w-6 h-2.5 rounded-full bg-nude-500 transition-all duration-300";
-                } else if (idx < stepNumber - 1) {
-                    dot.className = "dot w-2.5 h-2.5 rounded-full bg-nude-600 transition-all duration-300";
-                } else {
-                    dot.className = "dot w-2 h-2 rounded-full bg-nude-300 transition-all duration-300";
-                }
-            });
+      if (type === 'cine') {
+        document.getElementById('opt-cine').classList.add('selected');
+        selectedActivity = 'Séance Cinéma au Majestic Cinéma de Yaoundé 🎬';
+        restoContainer.style.display = 'none';
+      } else {
+        document.getElementById('opt-resto').classList.add('selected');
+        selectedActivity = 'Restaurant';
+        restoContainer.style.display = 'block';
+      }
+    }
 
-            currentStep = stepNumber;
+    let finalDate = '';
+    function validateDate() {
+      const dateVal = document.getElementById('date-picker').value;
+      if (!dateVal) {
+        alert('Choisis une date qui t\'arrange Noeva 😉');
+        return;
+      }
+      finalDate = dateVal;
+      nextStep(4);
+    }
 
-            // Show new step after brief timeout for smooth feel
-            setTimeout(() => {
-                const nextEl = document.getElementById(`step-${stepNumber}`);
-                if (nextEl) {
-                    nextEl.classList.add('active');
-                }
-            }, 100);
-
-            // Special triggers
-            if (stepNumber === 5) {
-                buildRecap();
-                triggerConfetti();
-            }
+    function validateActivity() {
+      if (!selectedActivity) {
+        alert('Choisis une activité (Cinéma ou Resto) 😊');
+        return;
+      }
+      if (selectedActivity === 'Restaurant') {
+        const restoName = document.getElementById('resto-name').value;
+        if (!restoName) {
+          alert('Entre le nom du resto où tu aimerais aller 🍽️');
+          return;
         }
+        selectedActivity = `Restaurant : ${restoName} 🍽️`;
+      }
+      nextStep(5);
+    }
 
-        const btnNo = document.getElementById('btn-no');
+    let summaryText = '';
+    function finishAll() {
+      const dress = document.getElementById('dress-code').value;
+      summaryText = `Hey ! J'ai répondu à ton invitation sur le site ! 😍\n\n📅 **Date :** ${finalDate}\n📍 **Programme :** ${selectedActivity}\n👗 **Style :** ${dress}\n\nJ'ai trop hâte ! ✨`;
+      
+      document.getElementById('recap-text').innerText = `Rendez-vous confirmé pour le ${finalDate} (${selectedActivity}) !`;
+      nextStep(6);
+    }
 
-        function moveRunawayButton() {
-            const container = document.getElementById('runaway-area');
-            const containerRect = container.getBoundingClientRect();
-            const btnRect = btnNo.getBoundingClientRect();
-
-            // Calculate boundary limits
-            const maxX = (containerRect.width / 2) - (btnRect.width / 2) + 60;
-            const maxY = 120; // Limit vertical distance
-
-            const randomX = (Math.random() - 0.5) * maxX * 2;
-            const randomY = (Math.random() - 0.5) * maxY * 2;
-
-            btnNo.style.position = 'absolute';
-            btnNo.style.transform = `translate(${randomX}px, ${randomY}px)`;
-        }
-
-        // Desktop hover and Mobile touch listeners
-        btnNo.addEventListener('mouseenter', moveRunawayButton);
-        btnNo.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            moveRunawayButton();
-        });
-
-        function validateDateInput() {
-            const input = document.getElementById('date-select');
-            const btn = document.getElementById('btn-step-3');
-            const errorMsg = document.getElementById('date-error');
-
-            if (input.value) {
-                selectedDate = input.value;
-                btn.classList.remove('opacity-50', 'cursor-not-allowed');
-                btn.classList.add('btn-glow');
-                errorMsg.classList.add('hidden');
-            } else {
-                selectedDate = null;
-                btn.classList.add('opacity-50', 'cursor-not-allowed');
-                btn.classList.remove('btn-glow');
-            }
-        }
-
-        function handleDateSubmit() {
-            if (!selectedDate) {
-                document.getElementById('date-error').classList.remove('hidden');
-                return;
-            }
-            goToStep(4);
-        }
-
-        function selectOption(type) {
-            selectedActivityType = type;
-            const cardCinema = document.getElementById('option-cinema');
-            const cardResto = document.getElementById('option-resto');
-            const restoContainer = document.getElementById('resto-input-container');
-
-            if (type === 'cinema') {
-                cardCinema.classList.add('selected');
-                cardResto.classList.remove('selected');
-                restoContainer.classList.add('hidden');
-            } else if (type === 'resto') {
-                cardResto.classList.add('selected');
-                cardCinema.classList.remove('selected');
-                restoContainer.classList.remove('hidden');
-                document.getElementById('resto-name').focus();
-            }
-
-            validateActivityChoice();
-        }
-
-        function validateActivityChoice() {
-            const btn = document.getElementById('btn-step-4');
-            const errorMsg = document.getElementById('activity-error');
-
-            let isValid = false;
-
-            if (selectedActivityType === 'cinema') {
-                isValid = true;
-            } else if (selectedActivityType === 'resto') {
-                const restoInput = document.getElementById('resto-name').value.trim();
-                selectedRestoName = restoInput;
-                if (restoInput.length > 0) {
-                    isValid = true;
-                }
-            }
-
-            if (isValid) {
-                btn.classList.remove('opacity-50', 'cursor-not-allowed');
-                btn.classList.add('btn-glow');
-                errorMsg.classList.add('hidden');
-            } else {
-                btn.classList.add('opacity-50', 'cursor-not-allowed');
-                btn.classList.remove('btn-glow');
-            }
-        }
-
-        function handleActivitySubmit() {
-            if (!selectedActivityType) {
-                document.getElementById('activity-error').classList.remove('hidden');
-                return;
-            }
-
-            if (selectedActivityType === 'resto' && !selectedRestoName) {
-                document.getElementById('activity-error').innerText = "Renseigne le nom du restaurant de ton choix 🤍";
-                document.getElementById('activity-error').classList.remove('hidden');
-                return;
-            }
-
-            goToStep(5);
-        }
-
-        function buildRecap() {
-            // Format French Date
-            const dateObj = new Date(selectedDate);
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            let formattedDate = dateObj.toLocaleDateString('fr-FR', options);
-            // Capitalize first letter of date
-            formattedDate = formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
-
-            document.getElementById('recap-date').innerText = formattedDate;
-
-            let activityText = "";
-            let whatsappMessage = "";
-
-            if (selectedActivityType === 'cinema') {
-                activityText = "Majestic Cinéma de Yaoundé 🎬";
-                document.getElementById('recap-icon').innerText = "🎬";
-                whatsappMessage = `Coucou ! J'ai validé notre date pour le *${formattedDate}* au *Majestic Cinéma de Yaoundé* ! 🎬✨ J'ai trop hâte !`;
-            } else {
-                activityText = `Restaurant : ${selectedRestoName} 🍽️`;
-                document.getElementById('recap-icon').innerText = "🍽️";
-                whatsappMessage = `Coucou ! J'ai validé notre date pour le *${formattedDate}* au restaurant *${selectedRestoName}* ! 🍽️✨ J'ai trop hâte !`;
-            }
-
-            document.getElementById('recap-activity').innerText = activityText;
-
-            // Generate WhatsApp URL
-            const encodedMsg = encodeURIComponent(whatsappMessage);
-            document.getElementById('whatsapp-link').href = `https://wa.me/?text=${encodedMsg}`;
-        }
-
-        function triggerConfetti() {
-            const canvas = document.getElementById('canvas-confetti');
-            const ctx = canvas.getContext('2d');
-            
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-
-            const particles = [];
-            const colors = ['#d4a373', '#e3d5ca', '#f5ebe0', '#bc8a5f', '#a5a58d', '#ffffff'];
-
-            for (let i = 0; i < 70; i++) {
-                particles.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height - canvas.height,
-                    size: Math.random() * 8 + 4,
-                    color: colors[Math.floor(Math.random() * colors.length)],
-                    speedY: Math.random() * 3 + 2,
-                    speedX: Math.random() * 2 - 1,
-                    rotation: Math.random() * 360,
-                    spin: Math.random() * 4 - 2
-                });
-            }
-
-            let animationFrame;
-            function render() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                particles.forEach((p) => {
-                    p.y += p.speedY;
-                    p.x += p.speedX;
-                    p.rotation += p.spin;
-
-                    ctx.save();
-                    ctx.translate(p.x, p.y);
-                    ctx.rotate((p.rotation * Math.PI) / 180);
-                    ctx.fillStyle = p.color;
-                    ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
-                    ctx.restore();
-                });
-
-                if (particles.some(p => p.y < canvas.height)) {
-                    animationFrame = requestAnimationFrame(render);
-                }
-            }
-
-            render();
-        }
-    </script>
+    function sendWhatsApp() {
+      const encodedMsg = encodeURIComponent(summaryText);
+      window.location.href = `https://wa.me/?text=${encodedMsg}`;
+    }
+  </script>
 </body>
 </html>
-```
